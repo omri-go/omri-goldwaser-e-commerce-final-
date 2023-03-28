@@ -5,3 +5,4 @@ venv
 #db.sqlite3
 /server/env
 .vs/
+server/api/secret_key.py

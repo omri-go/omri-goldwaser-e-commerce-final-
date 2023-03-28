@@ -12,6 +12,7 @@ const AppProvider = ({ children }) => {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [isSuperUser, setIsSuperUser] = useState(false);
   const [productsInCart, setproductsInCart] = useState([]);
+  const [messages, setMessages] = useState([]);
   
   function getHeaderWithToken(){
     const token = localStorage.getItem('auth_token');      
@@ -86,7 +87,8 @@ const AppProvider = ({ children }) => {
   }, []);
 
   return (
-      <AppContext.Provider value={{ users, products, loggedUserData, isAuthenticated, getUsers, getProducts, setLoggedUserData, productsInCart, setproductsInCart, storedProducts, setProducts, isSuperUser }}>
+      <AppContext.Provider value={{ users, products, loggedUserData, isAuthenticated, getUsers, 
+      getProducts, setLoggedUserData, productsInCart, setproductsInCart, storedProducts, setProducts, isSuperUser, setMessages, messages }}>
       {children}
     </AppContext.Provider>
   );

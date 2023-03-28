@@ -9,31 +9,7 @@ const ConfirmCheckout = (props) => {
     const { getUsers, getProducts, productsInCart, setproductsInCart } = useAppContext();
 
   const toggle = () => setIsModal((prev) => !prev);
-
-  const handleDeleteUser = async (name) => {
-    try {
-      const resp = await axios.delete(`${USERS_API_URL}/${name}`);
-      if ((resp.statusText = "OK")) {
-        toggle();
-        getUsers();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleDeleteProduct = async (productId) => {
-    try {
-      const resp = await axios.delete(`${PRODUCTS_API_URL}/${productId}`);
-      if ((resp.statusText = "OK")) {
-        toggle();
-        getProducts();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  
   function getHeaderWithToken(){
     const token = localStorage.getItem('auth_token');      
     let data = {};      

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { CHATBOT } from "../constants";
+import { useAppContext } from "../context/AppContext";
+
 
 const Chatbot = () => {
-    const [messages, setMessages] = useState([]);
+    const { messages, setMessages }  = useAppContext();
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (event) => {
@@ -18,6 +20,7 @@ const Chatbot = () => {
                 });
                 const botResponse = response.data.text;
                 setMessages([...messages, { text: inputValue, user: true }, { text: botResponse, user: false }]);
+                console.log(messages);
             } catch (error) {
                 console.error(error);
             }
