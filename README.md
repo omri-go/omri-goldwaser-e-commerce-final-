@@ -97,3 +97,10 @@ docker:
 ```
 
 > To build the images cd go the folder with the docker-compose.yaml file and run: docker-compose up
+
+```
+chatbot:
+```
+> To use the Chatbot, create a file called "secret_key.py" inside the server/api.
+>inside it put:
+>OPENAI_KEY = "< your openai key >"
