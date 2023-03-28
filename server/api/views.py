@@ -23,7 +23,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.exceptions import ValidationError
 
-#import openai
+import openai
 
 try:
     from .secret_key import OPENAI_KEY    
@@ -321,133 +321,31 @@ def checkout2(request):
 @api_view(['POST'])
 def chatbot(request):         
 
-    #openai.api_key = OPENAI_KEY
-    #messages = [
-    #    {"role": "system", 
-    #        "content": "You are an AI salesman trying to sell books, cars and lamps."},
-    #]
+    openai.api_key = OPENAI_KEY
+    messages = [
+       {"role": "system", 
+           "content": "You are an AI salesman trying to sell books, cars and lamps."},
+    ]
 
-    #def chatbot_send_to_openai(input):
-    #    if input:
-    #        messages.append({"role": "user", "content": input})
-    #        try:
-    #            chat = openai.ChatCompletion.create(
-    #                model="gpt-3.5-turbo", messages=messages
-    #            )            
-    #            reply = chat.choices[0].message.content
-    #            messages.append({"role": "assistant", "content": reply})
-    #            return reply
-    #        except:
-    #            return "there was an error with OpenAI"
+    def chatbot_send_to_openai(input):
+       if input:
+           messages.append({"role": "user", "content": input})
+           try:
+               chat = openai.ChatCompletion.create(
+                   model="gpt-3.5-turbo", messages=messages
+               )            
+               reply = chat.choices[0].message.content
+               messages.append({"role": "assistant", "content": reply})
+               return reply
+           except:
+               return "there was an error with OpenAI"
 
-    #if OPENAI_KEY=="":
-    #    # you need to put your openai key in secret_key.py with OPENAI_KEY=<your openai key> in the same folder as this file
-    #    data = {'text': 'My admin forgot to config me :('} 
-    #else:                
-    #    reply = chatbot_send_to_openai(request.data['text'])
-    #    data = {'text': reply} 
+    if OPENAI_KEY=="":
+       # you need to put your openai key in secret_key.py with OPENAI_KEY=<your openai key> in the same folder as this file
+       data = {'text': 'My admin forgot to config me :('} 
+    else:                
+       reply = chatbot_send_to_openai(request.data['text'])
+       data = {'text': reply} 
     
-    data = {'text': "commented out because of an issue with docker"} 
+    #data = {'text': "commented out because of an issue with docker"} 
     return Response(data=data, status=status.HTTP_200_OK)
-
-
-# not used anymore 
-# get user data based on authentification token
-#class getUsers2(APIView):
-#    authentication_classes = [TokenAuthentication]
-#    permission_classes = [IsAuthenticated]
-
-#    def get(self, request):
-#        user = request.user
-#        if user.is_superuser:
-#            data = UserProfile.objects.all()
-#        else:            
-#            data = UserProfile.objects.filter(user=user)
-
-#        serializer = UserSerializer(data, context={'request': request}, many=True)        
-#        return Response(serializer.data)
-
-# not used anymore    
-#@api_view(['GET'])
-#def checkout(request):    
-#    auth_header = request.META.get('HTTP_AUTHORIZATION', None)
-#    token = _get_token(auth_header)
-#    user = _get_user_from_token(token)
-
-#    # the user isn't logged in, return nothing        
-#    if user==None:    
-#        return Response({'error': 'Must be logged in to checkout'}, status=status.HTTP_401_UNAUTHORIZED)    
-    
-#    user_profile = UserProfile.objects.get(user = user)
-
-#    # if the query is empty there are no products in the cart
-#    if not ProductsInCart.objects.filter(user_profile=user_profile):
-#        return Response({'error': 'No products to buy'}, status=status.HTTP_401_UNAUTHORIZED)
-    
-#    products_in_cart = ProductsInCart.objects.get(user_profile=user_profile) 
-#    products_bought, created = ProductsBought.objects.get_or_create(user_profile=user_profile)    
-#    for p in products_in_cart.products.all():        
-#        products_bought.products.add(p)
-    
-#    p_in_cart = ProductsInCart.objects.filter(user_profile=user_profile)
-#    if p_in_cart: p_in_cart.delete()
-
-#    return Response(status=status.HTTP_200_OK)      
-
-#@api_view(['POST'])
-#def add_product_to_cart(request,product_id):
-#    try:        
-#        product = Product.objects.get(id=product_id)
-#    except Product.DoesNotExist:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
-
-#    token = request.data.get('token')
-#    try:
-#        token_obj = Token.objects.get(key=token)
-#        user = User.objects.get(id=token_obj.user_id)
-#        if user.is_superuser:
-#            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
-#        user_profile = UserProfile.objects.get(user = user)
-#    except Token.DoesNotExist:
-#        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    
-#    if ProductsInCart.objects.filter(user_profile=user_profile, products=product).exists():
-#        # can't buy the same product twice. this should be dealt with on the front end
-#        return Response({'error': 'Cant buy the same product twice'}, status=status.HTTP_401_UNAUTHORIZED)
-
-#    # add products to the shopping cart
-#    cart, created = ProductsInCart.objects.get_or_create(user_profile=user_profile)
-#    cart.products.add(product)
-#    return Response(status=status.HTTP_200_OK)
-
-#@api_view(['POST'])
-#def remove_product_from_cart(request,product_id):
-#    # get product
-#    try:        
-#        product_to_remove = Product.objects.get(id=product_id)
-#    except Product.DoesNotExist:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-#    # get UserProfile based on the token
-#    token = request.data.get('token')
-#    try:
-#        token_obj = Token.objects.get(key=token)
-#        user = User.objects.get(id=token_obj.user_id)
-#        user_profile = UserProfile.objects.get(user = user)
-#    except Token.DoesNotExist:
-#        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
-#    products_in_cart = ProductsInCart.objects.get(user_profile=user_profile)
-#    # TODO
-#    #  if product not in cart:
-#    #     return Response({'error': 'Trying to remove a product thats not in the cart'}, status=status.HTTP_401_UNAUTHORIZED)
-    
-#    products_set = products_in_cart.products.all()
-#    products_set = products_set.exclude(id=product_to_remove.id)
-
-#    # Update the products_in_cart field with the updated set of products
-#    products_in_cart.products.set(products_set)  
-
-#    products_in_cart.products.remove(product_to_remove)
-#    return Response(status=status.HTTP_200_OK)      
