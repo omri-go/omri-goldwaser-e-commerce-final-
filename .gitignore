@@ -1,0 +1,7 @@
+node_modules
+build
+.env
+venv
+#db.sqlite3
+/server/env
+.vs/
