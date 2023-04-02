@@ -102,5 +102,15 @@ docker:
 chatbot:
 ```
 > To use the Chatbot, create a file called "secret_key.py" inside the server/api.
+
 >inside it put:
+
 >OPENAI_KEY = "< your openai key >"
+
+>docker-compose up
+
+
+```
+note:
+```
+This website built as a final project for John Bryce Training. 
