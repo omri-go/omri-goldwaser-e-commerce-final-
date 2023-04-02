@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import LoginForm from "./LoginForm";
 
-import { useAppContext } from "../context/AppContext";
 
 const Login = (props) => {
   const [isModal, setIsModal] = useState(false);  
