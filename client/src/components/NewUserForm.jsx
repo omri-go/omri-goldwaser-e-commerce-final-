@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from "axios";
-import { USERS_API_URL, LOGIN_URL } from "../constants";
+import { USERS_API_URL } from "../constants";
 import { useAppContext } from "../context/AppContext";
 
 const NewUserForm = (props) => {

@@ -14,7 +14,7 @@ const Logout = (props) => {
     window.location.href = '';
   };  
 
-  // TODO fix this
+  
   useEffect(() => {
     const token = !!(localStorage.getItem('auth_token'));
     if (token){

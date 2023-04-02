@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from "axios";
 import { LOGIN_URL } from "../constants";
@@ -8,12 +8,6 @@ const LoginForm = (props) => {
   const [formData, setFormData] = useState(initialData);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // useEffect(() => {
-  //   if (props.user) {
-  //     const { id, name, email, document, phone } = props.user;
-  //     setFormData({ id, name, email, document, phone });
-  //   }
-  // }, [props.user]);
 
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

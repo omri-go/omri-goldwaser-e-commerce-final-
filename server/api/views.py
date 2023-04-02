@@ -171,9 +171,7 @@ def _get_products_list(request, category=None,status=None):
             output_data = serializer.data
             for p_dict in output_data:
                 p_dict['status']='' # this is the NO_STATUS, show nothing
-                #for cart_p in products_in_shopping_cart:
-                #    if p_dict['id']==cart_p.id:
-                #        p_dict['status']=PRODUCT_STATUS['IN_CART'].value
+              
                 for bought_p in products_bought:
                     if p_dict['id']==bought_p.id:
                         p_dict['status']=PRODUCT_STATUS['BOUGHT'].value
@@ -182,7 +180,6 @@ def _get_products_list(request, category=None,status=None):
                 filtered_s_data = []
                 for d in output_data:
                     if d['status']=='' and status=='None': filtered_s_data.append(d)
-                    #elif d['status']=='In Cart' and status=="In Cart": filtered_s_data.append(d)
                     elif d['status']=='Bought' and status=="Bought": filtered_s_data.append(d)
                 output_data = filtered_s_data
             

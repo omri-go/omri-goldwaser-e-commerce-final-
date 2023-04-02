@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, ModalHeader, Button, ModalFooter } from "reactstrap";
 import axios from "axios";
-import { USERS_API_URL, PRODUCTS_API_URL, CHECKOUT } from "../constants";
+import { CHECKOUT } from "../constants";
 import { useAppContext } from "../context/AppContext";
 
 const ConfirmCheckout = (props) => {
@@ -26,10 +26,7 @@ const ConfirmCheckout = (props) => {
       let headers = getHeaderWithToken();
       headers = { ...headers, 'products_to_buy': productsInCart };
       const resp = await axios.post(CHECKOUT + "2", { headers });
-      // prev version of checkout
-      //const resp = await axios.post(`${REMOVE_PRODUCT_FROM_CART}/${product.id}`, data);
-      //console.log(headers);
-      //const resp = await axios.get(CHECKOUT, {headers});
+
       if ((resp.statusText = "OK")) {
         toggle();
         getProducts();
