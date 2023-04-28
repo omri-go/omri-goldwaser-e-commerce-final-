@@ -18,12 +18,16 @@ cd server
 - On WindowsOS
 
 ```
-python -m venv <path to venv>
+python -m virtualenv myenv  
 ```
 
 > Activate virtual environment 
 
 - On WindowsOS
+
+```
+myenv\Scripts\activate     
+```
 
 - Using bash:
 ```
@@ -76,8 +80,6 @@ cd client
 npm install
 ```
 
-> Create .env file using .env.sample
-
 > Start the project
 
 ```
@@ -113,4 +115,5 @@ chatbot:
 ```
 note:
 ```
-This website built as a final project for John Bryce Training. 
+> This website was built  as a final project for John Bryce Training. 
+> This website was built based on the following Github: https://github.com/ikramdeveloper/react-django-app 
